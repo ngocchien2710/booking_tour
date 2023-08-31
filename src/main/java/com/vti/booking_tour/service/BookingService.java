@@ -50,7 +50,6 @@ public class BookingService {
        booking.setStatus(BookingStatus.BOOKING_PENDING);
        return bookingRepository.save(booking);
 
-
     }
     public List<Booking> findAllCancel(){
 
