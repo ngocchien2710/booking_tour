@@ -45,10 +45,8 @@ public class BookingService {
     }
 
     public List<Booking> findAllActive(){
-       Booking booking = new ArrayList<>();
-       booking.setStatus(BookingStatus.BOOKING_GOING);
-       booking.setStatus(BookingStatus.BOOKING_PENDING);
-       return bookingRepository.save(booking);
+
+       return null;
 
     }
     public List<Booking> findAllCancel(){
