@@ -44,9 +44,9 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public List<Booking> findAllActive(){
+    public List<Booking> findAllActive(int status){
 
-       return null;
+       return bookingRepository.findAllByStatus(status);
 
     }
     public List<Booking> findAllCancel(){
