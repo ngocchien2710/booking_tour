@@ -5,22 +5,27 @@ import com.vti.booking_tour.models.BookingStatus;
 import com.vti.booking_tour.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class BookingService {
+public class BookingService implements IBookingService{
     @Autowired
     private BookingRepository bookingRepository;
 
     public Booking insert(Booking booking){
+        booking.setStatus(BookingStatus.BOOKING_PENDING);
+        booking.setCreatedDate(LocalDateTime.now());
         return bookingRepository.save(booking);
     }
 
-    public Booking update(Booking booking){
+    public Booking updateBooking(Booking booking){
         Optional<Booking> optionalBooking = bookingRepository.findById(booking.getId());
         if (optionalBooking.isPresent()) {
             return bookingRepository.save(booking);
@@ -28,7 +33,7 @@ public class BookingService {
     return null;
     }
 
-    public Booking delete(Long id) {
+    public Booking deleteBooking(Long id) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
         if (optionalBooking.isPresent()) {
             Booking foundBooking = optionalBooking.get();
@@ -41,22 +46,35 @@ public class BookingService {
         }
 
     public List<Booking> findAll() {
+
         return bookingRepository.findAll();
     }
 
-    public List<Booking> findAllActive(int status){
+    public List<Booking> findAllActive(){
 
-       return bookingRepository.findAllByStatus(status);
+       return bookingRepository.findAll().stream().filter(booking -> booking.isActive()== true).collect(Collectors.toList());
 
     }
     public List<Booking> findAllCancel(){
 
-        return null;
+        return bookingRepository.findAll().stream().filter(booking -> booking.isCancel()== true).collect(Collectors.toList());
     }
 
     public List<Booking> findAllFinish(){
 
-        return null;
+        return bookingRepository.findAll().stream().filter(booking -> booking.isFinish()== true).collect(Collectors.toList());
     }
 
+
+
+
+    @Override
+    public Optional<Booking> getBookingById(Long id) {
+        return bookingRepository.findById(id);
     }
+
+
+
+
+
+}

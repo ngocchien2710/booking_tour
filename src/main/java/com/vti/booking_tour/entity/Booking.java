@@ -1,6 +1,7 @@
 package com.vti.booking_tour.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.vti.booking_tour.models.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,21 +28,21 @@ public class Booking {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "bookingName")
+    @Column(name = "booking_name")
     private String bookingName;
 
     @Column(name = "price")
-    private double price;
+    private int price;
 
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
-    @Column(name = "finishDate")
+    @Column(name = "finish_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime  finishDate;
 
-    @Column(name = "createdDate")
+    @Column(name = "created_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime  createdDate;
 
@@ -54,6 +55,18 @@ public class Booking {
     @Column(name = "status")
     private int status;
 
+    private String url;
 
+    public boolean isActive(){
+        return  status == BookingStatus.BOOKING_PENDING || status == BookingStatus.BOOKING_GOING;
+    }
+
+    public boolean isCancel(){
+        return status == BookingStatus.BOOKING_CANCEL;
+    }
+
+    public  boolean isFinish(){
+        return status == BookingStatus.BOOKING_FINISH;
+    }
 
 }
