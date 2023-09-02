@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name= "User")
+@Table(name= "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

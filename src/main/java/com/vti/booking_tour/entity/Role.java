@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "tables")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
